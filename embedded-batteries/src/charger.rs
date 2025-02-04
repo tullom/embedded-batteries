@@ -63,3 +63,41 @@ pub trait ErrorType {
 impl<T: ErrorType + ?Sized> ErrorType for &mut T {
     type Error = T::Error;
 }
+
+/// Charging current is measured in milliamps, where 1mA is 1
+pub type MilliAmps = u16;
+/// Charging voltage is measured in milliamps, where 1mV is 1
+pub type MilliVolts = u16;
+
+/// Blocking Smart Battery Charger methods
+pub trait Charger: ErrorType {
+    /// Sets the maximum current that a Smart Battery Charger may deliver to
+    /// the Smart Battery. Returns charge current as acknowledged by the charger.
+    /// In combination with the ChargingVoltage() function and the battery's internal
+    /// impedance, this function determines the Smart Battery Charger's desired operating point. Together, these
+    /// functions permit a Smart Battery Charger to dynamically adjust its charging profile (current/voltage) for
+    /// optimal charge. The Smart Battery can effectively turn off the Smart Battery Charger by returning a value
+    /// of 0 for this function.
+    fn charging_current(&mut self, current: MilliAmps) -> Result<MilliAmps, Self::Error>;
+
+    /// Sets and returns the maximum voltage that a Smart Battery Charger may deliver to the
+    /// Smart Battery. Returns charge current as acknowledged by the charger.
+    /// In combination with the ChargingCurrent() function and the battery's internal impedance,
+    /// this function determines the Smart Battery Charger's desired operating point. Together, these functions
+    /// permit a Smart Battery Charger to dynamically adjust its charging profile (current/voltage) for optimal
+    /// charge. The Smart Battery can effectively turn off the Smart Battery Charger by returning a value of 0 for
+    /// this function.
+    fn charging_voltage(&mut self, voltage: MilliVolts) -> Result<MilliVolts, Self::Error>;
+}
+
+impl<T: Charger + ?Sized> Charger for &mut T {
+    #[inline]
+    fn charging_current(&mut self, current: MilliAmps) -> Result<MilliAmps, Self::Error> {
+        T::charging_current(self, current)
+    }
+
+    #[inline]
+    fn charging_voltage(&mut self, voltage: MilliVolts) -> Result<MilliVolts, Self::Error> {
+        T::charging_voltage(self, voltage)
+    }
+}
