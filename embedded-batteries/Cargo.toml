@@ -15,3 +15,4 @@ defmt = ["dep:defmt"]
 [dependencies]
 embedded-hal = "1.0.0"
 defmt = { version = "0.3", optional = true }
+bitfield-struct = "0.10"

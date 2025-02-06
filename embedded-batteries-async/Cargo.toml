@@ -16,3 +16,4 @@ defmt = ["dep:defmt"]
 embedded-batteries = { path = "../embedded-batteries"}
 embedded-hal = "1.0.0"
 defmt = { version = "0.3", optional = true }
+bitfield-struct = "0.10"
