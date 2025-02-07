@@ -17,7 +17,7 @@ Drivers for fuel gauges and charging controllers should implement these traits t
 
 ## MSRV
 
-Currently, rust `1.81` and up is supported.
+Currently, rust `1.83` and up is supported.
 
 ## License
 
