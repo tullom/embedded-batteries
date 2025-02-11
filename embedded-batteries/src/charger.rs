@@ -1,3 +1,5 @@
+use crate::{MilliAmps, MilliVolts};
+
 /// Charger error.
 pub trait Error: core::fmt::Debug {
     /// Convert error to a generic charger error kind.
@@ -63,11 +65,6 @@ pub trait ErrorType {
 impl<T: ErrorType + ?Sized> ErrorType for &mut T {
     type Error = T::Error;
 }
-
-/// Charging current is measured in milliamps, where 1mA is 1
-pub type MilliAmps = u16;
-/// Charging voltage is measured in milliamps, where 1mV is 1
-pub type MilliVolts = u16;
 
 /// Blocking Smart Battery Charger methods
 pub trait Charger: ErrorType {

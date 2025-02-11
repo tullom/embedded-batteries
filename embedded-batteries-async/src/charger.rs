@@ -1,6 +1,7 @@
 use core::future::Future;
 
-pub use embedded_batteries::charger::{Error, ErrorKind, ErrorType, MilliAmps, MilliVolts};
+pub use embedded_batteries::charger::{Error, ErrorKind, ErrorType};
+pub use embedded_batteries::{MilliAmps, MilliVolts};
 
 /// Asynchronous Smart Battery Charger methods
 pub trait Charger: ErrorType {
