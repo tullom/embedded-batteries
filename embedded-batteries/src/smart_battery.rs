@@ -487,7 +487,7 @@ pub trait SmartBattery: ErrorType {
     /// and flags minor conditions requiring attention.
     ///
     /// See the SBS specification for detailed documentation.
-    fn battery_mode(&mut self, flags: u16) -> Result<u16, Self::Error>;
+    fn battery_mode(&mut self, flags: BatteryModeFields) -> Result<BatteryModeFields, Self::Error>;
 
     /// 0x04
     ///
@@ -527,7 +527,7 @@ pub trait SmartBattery: ErrorType {
     ///
     /// Returns the cell-pack's internal temperature (°K). The actual operational temperature range will be defined
     /// at a pack level by a particular manufacturer.
-    fn temperature(&mut self) -> Result<bool, Self::Error>;
+    fn temperature(&mut self) -> Result<DeciKelvin, Self::Error>;
 
     /// 0x09
     ///
@@ -648,7 +648,7 @@ pub trait SmartBattery: ErrorType {
     /// A Smart Battery Charger cannot be assumed to know this scaling information. (However, a ‘Level 3’
     /// or ‘Host Controlled’ Smart Battery Charger may read this value if required for specific
     /// applications.)
-    fn specification_info(&mut self) -> Result<u16, Self::Error>;
+    fn specification_info(&mut self) -> Result<SpecificationInfoFields, Self::Error>;
 
     /// 0x1B
     ///
@@ -695,7 +695,7 @@ impl<T: SmartBattery + ?Sized> SmartBattery for &mut T {
     }
 
     #[inline]
-    fn battery_mode(&mut self, flags: u16) -> Result<u16, Self::Error> {
+    fn battery_mode(&mut self, flags: BatteryModeFields) -> Result<BatteryModeFields, Self::Error> {
         T::battery_mode(self, flags)
     }
 
@@ -720,7 +720,7 @@ impl<T: SmartBattery + ?Sized> SmartBattery for &mut T {
     }
 
     #[inline]
-    fn temperature(&mut self) -> Result<bool, Self::Error> {
+    fn temperature(&mut self) -> Result<DeciKelvin, Self::Error> {
         T::temperature(self)
     }
 
@@ -799,7 +799,7 @@ impl<T: SmartBattery + ?Sized> SmartBattery for &mut T {
     }
 
     #[inline]
-    fn specification_info(&mut self) -> Result<u16, Self::Error> {
+    fn specification_info(&mut self) -> Result<SpecificationInfoFields, Self::Error> {
         T::specification_info(self)
     }
 
