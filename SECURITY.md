@@ -1,63 +1,66 @@
-## Security
+# Vulnerability Disclosure and Embargo Policy
 
-Microsoft takes the security of our software products and services
-seriously, which includes all source code repositories managed through
-our GitHub organizations, which include
-[Microsoft](https://github.com/Microsoft),
-[Azure](https://github.com/Azure),
-[DotNet](https://github.com/dotnet),
-[AspNet](https://github.com/aspnet) and
-[Xamarin](https://github.com/xamarin).
+The Open Device Partnership project welcomes the responsible disclosure of vulnerabilities.
 
-If you believe you have found a security vulnerability in any
-Microsoft-owned repository that meets [Microsoft's definition of a
-security vulnerability](https://aka.ms/security.md/definition), please
-report it to us as described below.
+## Initial Contact
 
-## Reporting Security Issues
+All security bugs in Open Device Partnership should be reported to the security team.
+To do so, please reach out in the form of a
+[Github Security Advisory](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities).
 
-**Please do not report security vulnerabilities through public GitHub
-issues.**
+You will be invited to join this private area to discuss specifics. Doing so
+allows us to start with a high level of confidentiality and relax it if the
+issue is less critical, moving to work on the fix in the open.
 
-Instead, please report them to the Microsoft Security Response Center
-(MSRC) at
-[https://msrc.microsoft.com/create-report](https://aka.ms/security.md/msrc/create-report).
+Your initial contact will be acknowledged within 48 hours, and you’ll receive
+a more detailed response within 96 hours indicating the next steps in handling
+your report.
 
-If you prefer to submit without logging in, send email to
-[secure@microsoft.com](mailto:secure@microsoft.com).  If possible,
-encrypt your message with our PGP key; please download it from the
-[Microsoft Security Response Center PGP Key
-page](https://aka.ms/security.md/msrc/pgp).
+After the initial reply to your report, the security team will endeavor to
+keep you informed of the progress being made towards a fix and full
+announcement. As recommended by
+[RFPolicy](https://dl.packetstormsecurity.net/papers/general/rfpolicy-2.0.txt),
+these updates will be sent at least every five working days.
 
-You should receive a response within 24 hours. If for some reason you
-do not, please follow up via email to ensure we received your original
-message. Additional information can be found at
-[microsoft.com/msrc](https://www.microsoft.com/msrc).
+## Disclosure Policy
 
-Please include the requested information listed below (as much as you
-can provide) to help us better understand the nature and scope of the
-possible issue:
+The Open Device Partnership project has a 5 step disclosure process.
 
-* Type of issue (e.g. buffer overflow, SQL injection, cross-site scripting, etc.)
-* Full paths of source file(s) related to the manifestation of the issue
-* The location of the affected source code (tag/branch/commit or direct URL)
-* Any special configuration required to reproduce the issue
-* Step-by-step instructions to reproduce the issue
-* Proof-of-concept or exploit code (if possible)
-* Impact of the issue, including how an attacker might exploit the issue
+1. Contact is established, a private channel created, and the security report
+   is received and is assigned a primary handler. This person will coordinate
+   the fix and release process.
+2. The problem is confirmed and a list of all affected versions is determined.
+   If an embargo is needed (see below), details of the embargo are decided.
+3. Code is audited to find any potential similar problems.
+4. Fixes are prepared for all releases which are still under maintenance. In
+   case of embargo, these fixes are not committed to the public repository but
+   rather held in a private fork pending the announcement.
+5. The changes are pushed to the public repository and new builds are deployed.
 
-This information will help us triage your report more quickly.
+This process can take some time, especially when coordination is required
+with maintainers of other projects. Every effort will be made to handle the bug
+in as timely a manner as possible, however it is important that we follow the
+release process above to ensure that the disclosure is handled in a consistent
+manner.
 
-If you are reporting for a bug bounty, more complete reports can
-contribute to a higher bounty award. Please visit our [Microsoft Bug
-Bounty Program](https://aka.ms/security.md/msrc/bounty) page for more
-details about our active programs.
+## Embargoes
 
-## Preferred Languages
+While the Open Device Partnership project aims to follow the highest standards of
+transparency and openness, handling some security issues may pose such an
+immediate threat to various stakeholders and require coordination between
+various actors that it cannot be made immediately public.
 
-We prefer all communications to be in English.
+In this case, security issues will fall under an embargo.
 
-## Policy
+An embargo can be called for in various cases:
 
-Microsoft follows the principle of [Coordinated Vulnerability
-Disclosure](https://aka.ms/security.md/cvd).
+- when disclosing the issue without simultaneously providing a mitigation
+  would seriously endanger users,
+- when producing a fix requires coordinating between multiple actors (such as
+  upstream or downstream/dependency projects), or simply
+- when proper analysis of the issue and its ramifications demands time.
+
+If we determine that an issue you report requires an embargo, we will discuss
+this with you and try to find a reasonable expiry date (aka “embargo
+completion date”), as well as who should be included in the list of
+need-to-know people.
