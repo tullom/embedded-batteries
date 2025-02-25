@@ -10,7 +10,7 @@ pub use embedded_batteries::{MilliAmpsSigned, MilliVolts};
 pub trait SmartBattery: ErrorType {
     /// 0x01
     ///
-    /// Sets or gets the Low Capacity alarm threshold value. Whenever the RemainingCapacity() falls below the
+    /// Gets the Low Capacity alarm threshold value. Whenever the RemainingCapacity() falls below the
     /// Low Capacity value, the Smart Battery sends AlarmWarning() messages to the SMBus Host with the
     /// REMAINING_CAPACITY_ALARM bit set. A Low Capacity value of 0 disables this alarm.
     /// (If the ALARM_MODE bit is set in BatteryMode() then the AlarmWarning() message is disabled for a set
@@ -20,14 +20,28 @@ pub trait SmartBattery: ErrorType {
     /// will remain unchanged until altered by the RemainingCapacityAlarm() function. The Low Capacity value
     /// may be expressed in either capacity (mAh) or power (10mWh) depending on the setting of the
     /// BatteryMode()'s CAPACITY_MODE bit (see BatteryMode()).
-    fn remaining_capacity_alarm(
+    fn remaining_capacity_alarm(&mut self) -> impl Future<Output = Result<CapacityModeValue, Self::Error>>;
+
+    /// 0x01
+    ///
+    /// Sets the Low Capacity alarm threshold value. Whenever the RemainingCapacity() falls below the
+    /// Low Capacity value, the Smart Battery sends AlarmWarning() messages to the SMBus Host with the
+    /// REMAINING_CAPACITY_ALARM bit set. A Low Capacity value of 0 disables this alarm.
+    /// (If the ALARM_MODE bit is set in BatteryMode() then the AlarmWarning() message is disabled for a set
+    /// period of time. See the BatteryMode() function for further information.)
+    ///
+    /// The Low Capacity value is set to 10% of design capacity at time of manufacture. The Low Capacity value
+    /// will remain unchanged until altered by the RemainingCapacityAlarm() function. The Low Capacity value
+    /// may be expressed in either capacity (mAh) or power (10mWh) depending on the setting of the
+    /// BatteryMode()'s CAPACITY_MODE bit (see BatteryMode()).
+    fn set_remaining_capacity_alarm(
         &mut self,
         capacity: CapacityModeValue,
-    ) -> impl Future<Output = Result<CapacityModeValue, Self::Error>>;
+    ) -> impl Future<Output = Result<(), Self::Error>>;
 
     /// 0x02
     ///
-    /// Sets or gets the Remaining Time alarm value. Whenever the AverageTimeToEmpty() falls below the
+    /// Gets the Remaining Time alarm value. Whenever the AverageTimeToEmpty() falls below the
     /// Remaining Time value, the Smart Battery sends AlarmWarning() messages to the SMBus Host with the
     /// REMAINING_TIME_ALARM bit set. A Remaining Time value of 0 effectively disables this alarm.
     /// (If the ALARM_MODE bit is set in BatteryMode() then the AlarmWarning() message is disabled for a set
@@ -35,31 +49,57 @@ pub trait SmartBattery: ErrorType {
     ///
     /// The Remaining Time value is set to 10 minutes at time of manufacture. The Remaining Time value will
     /// remain unchanged until altered by the RemainingTimeAlarm() function.
-    fn remaining_time_alarm(&mut self, time: Minutes) -> impl Future<Output = Result<Minutes, Self::Error>>;
+    fn remaining_time_alarm(&mut self) -> impl Future<Output = Result<Minutes, Self::Error>>;
+
+    /// 0x02
+    ///
+    /// Sets the Remaining Time alarm value. Whenever the AverageTimeToEmpty() falls below the
+    /// Remaining Time value, the Smart Battery sends AlarmWarning() messages to the SMBus Host with the
+    /// REMAINING_TIME_ALARM bit set. A Remaining Time value of 0 effectively disables this alarm.
+    /// (If the ALARM_MODE bit is set in BatteryMode() then the AlarmWarning() message is disabled for a set
+    /// period of time. See the BatteryMode() function for further information.)
+    ///
+    /// The Remaining Time value is set to 10 minutes at time of manufacture. The Remaining Time value will
+    /// remain unchanged until altered by the RemainingTimeAlarm() function.
+    fn set_remaining_time_alarm(&mut self, time: Minutes) -> impl Future<Output = Result<(), Self::Error>>;
 
     /// 0x03
     ///
-    /// This function selects the various battery operational modes and reports the battery’s capabilities, modes,
+    /// This function reads the various battery operational modes and reports the battery’s capabilities, modes,
     /// and flags minor conditions requiring attention.
     ///
     /// See the SBS specification for detailed documentation.
-    fn battery_mode(
-        &mut self,
-        flags: BatteryModeFields,
-    ) -> impl Future<Output = Result<BatteryModeFields, Self::Error>>;
+    fn battery_mode(&mut self) -> impl Future<Output = Result<BatteryModeFields, Self::Error>>;
+
+    /// 0x03
+    ///
+    /// This function sets the various battery operational modes and reports the battery’s capabilities, modes,
+    /// and flags minor conditions requiring attention. Note that not all fields are writeable.
+    ///
+    /// See the SBS specification for detailed documentation.
+    fn set_battery_mode(&mut self, flags: BatteryModeFields) -> impl Future<Output = Result<(), Self::Error>>;
 
     /// 0x04
     ///
     /// The AtRate() function is the first half of a two-function call-set used to set the AtRate value used in
-    /// calculations made by the AtRateTimeToFull(), AtRateTimeToEmpty(), and AtRateOK() functions. The
-    /// AtRate value may be expressed in either current (mA) or power (10mW) depending on the setting of the
+    /// calculations made by the AtRateTimeToFull(), AtRateTimeToEmpty(), and AtRateOK() functions.
+    ///
+    /// The AtRate value may be expressed in either current (mA) or power (10mW) depending on the setting of the
     /// BatteryMode()'s CAPACITY_MODE bit. (Configuration of the CAPACITY_MODE bit will alter the
     /// calculation of AtRate functions. Changing the state of CAPACITY_MODE may require a re-write to the
     /// AtRate() function using the appropriate units.)
-    fn at_rate(
-        &mut self,
-        rate: CapacityModeSignedValue,
-    ) -> impl Future<Output = Result<CapacityModeSignedValue, Self::Error>>;
+    fn at_rate(&mut self) -> impl Future<Output = Result<CapacityModeSignedValue, Self::Error>>;
+
+    /// 0x04
+    ///
+    /// The AtRate() function is the first half of a two-function call-set used to set the AtRate value used in
+    /// calculations made by the AtRateTimeToFull(), AtRateTimeToEmpty(), and AtRateOK() functions.
+    ///
+    /// The AtRate value may be expressed in either current (mA) or power (10mW) depending on the setting of the
+    /// BatteryMode()'s CAPACITY_MODE bit. (Configuration of the CAPACITY_MODE bit will alter the
+    /// calculation of AtRate functions. Changing the state of CAPACITY_MODE may require a re-write to the
+    /// AtRate() function using the appropriate units.)
+    fn set_at_rate(&mut self, rate: CapacityModeSignedValue) -> impl Future<Output = Result<(), Self::Error>>;
 
     /// 0x05
     ///
@@ -247,26 +287,39 @@ pub trait SmartBattery: ErrorType {
 
 impl<T: SmartBattery + ?Sized> SmartBattery for &mut T {
     #[inline]
-    async fn remaining_capacity_alarm(
-        &mut self,
-        capacity: CapacityModeValue,
-    ) -> Result<CapacityModeValue, Self::Error> {
-        T::remaining_capacity_alarm(self, capacity).await
+    async fn remaining_capacity_alarm(&mut self) -> Result<CapacityModeValue, Self::Error> {
+        T::remaining_capacity_alarm(self).await
+    }
+
+    async fn set_remaining_capacity_alarm(&mut self, capacity: CapacityModeValue) -> Result<(), Self::Error> {
+        T::set_remaining_capacity_alarm(self, capacity).await
     }
 
     #[inline]
-    async fn remaining_time_alarm(&mut self, time: Minutes) -> Result<Minutes, Self::Error> {
-        T::remaining_time_alarm(self, time).await
+    async fn remaining_time_alarm(&mut self) -> Result<Minutes, Self::Error> {
+        T::remaining_time_alarm(self).await
+    }
+
+    async fn set_remaining_time_alarm(&mut self, time: Minutes) -> Result<(), Self::Error> {
+        T::set_remaining_time_alarm(self, time).await
     }
 
     #[inline]
-    async fn battery_mode(&mut self, flags: BatteryModeFields) -> Result<BatteryModeFields, Self::Error> {
-        T::battery_mode(self, flags).await
+    async fn battery_mode(&mut self) -> Result<BatteryModeFields, Self::Error> {
+        T::battery_mode(self).await
+    }
+
+    async fn set_battery_mode(&mut self, flags: BatteryModeFields) -> Result<(), Self::Error> {
+        T::set_battery_mode(self, flags).await
     }
 
     #[inline]
-    async fn at_rate(&mut self, rate: CapacityModeSignedValue) -> Result<CapacityModeSignedValue, Self::Error> {
-        T::at_rate(self, rate).await
+    async fn at_rate(&mut self) -> Result<CapacityModeSignedValue, Self::Error> {
+        T::at_rate(self).await
+    }
+
+    async fn set_at_rate(&mut self, rate: CapacityModeSignedValue) -> Result<(), Self::Error> {
+        T::set_at_rate(self, rate).await
     }
 
     #[inline]
