@@ -4,6 +4,7 @@ pub use embedded_batteries::smart_battery::{
     BatteryModeFields, BatteryStatusFields, CapacityModeSignedValue, CapacityModeValue, Cycles, DeciKelvin, Error,
     ErrorCode, ErrorKind, ErrorType, ManufactureDate, Minutes, Percent, Revision, SpecificationInfoFields, Version,
 };
+use embedded_batteries::MilliAmps;
 pub use embedded_batteries::{MilliAmpsSigned, MilliVolts};
 
 /// Asynchronous Smart Battery methods.
@@ -213,6 +214,32 @@ pub trait SmartBattery: ErrorType {
     /// 65,535 indicates the battery is not being charged.
     fn average_time_to_full(&mut self) -> impl Future<Output = Result<Minutes, Self::Error>>;
 
+    /// 0x14
+    ///
+    /// The ChargingCurrent() function sets the maximum current that a Smart Battery Charger may
+    /// deliver to the Smart Battery. In combination with the ChargingVoltage() function and the
+    /// battery's internal impedance, this function determines the Smart Battery Charger's desired
+    /// operating point. Together, these functions permit a Smart Battery Charger to dynamically adjust
+    /// its charging profile (current/voltage) for optimal charge.
+    ///
+    /// The Smart Battery can turn off the Smart Battery Charger by returning a value of 0 for this function.
+    /// Smart Battery Chargers may be operated as a constant voltage source above their
+    /// maximum regulated current range by returning a ChargingCurrent() value of 65535.
+    fn charging_current(&mut self) -> impl Future<Output = Result<MilliAmps, Self::Error>>;
+
+    /// 0x15
+    ///
+    /// The ChargingVoltage() function sets the maximum voltage that a Smart Battery Charger may
+    /// deliver to the Smart Battery. In combination with the ChargingCurrent() function and the
+    /// battery's internal impedance, this function determines the Smart Battery Charger's desired
+    /// operating point. Together, these functions permit a Smart Battery Charger to dynamically adjust
+    /// its charging profile (current/voltage) for optimal charge.
+    ///
+    /// The Smart Battery can turn off the Smart Battery Charger by returning a value of 0 for this function.
+    /// Smart Battery Chargers may be operated as a constant current source above their
+    /// maximum regulated voltage range by returning a ChargingVoltage() value of 65535.
+    fn charging_voltage(&mut self) -> impl Future<Output = Result<MilliVolts, Self::Error>>;
+
     /// 0x16
     ///
     /// Returns the Smart Battery's status word which contains Alarm and Status bit flags. Some of the
@@ -395,6 +422,16 @@ impl<T: SmartBattery + ?Sized> SmartBattery for &mut T {
     #[inline]
     async fn average_time_to_full(&mut self) -> Result<Minutes, Self::Error> {
         T::average_time_to_full(self).await
+    }
+
+    #[inline]
+    async fn charging_current(&mut self) -> Result<MilliAmps, Self::Error> {
+        T::charging_current(self).await
+    }
+
+    #[inline]
+    async fn charging_voltage(&mut self) -> Result<MilliVolts, Self::Error> {
+        T::charging_voltage(self).await
     }
 
     #[inline]
