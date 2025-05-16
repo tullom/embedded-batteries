@@ -2,6 +2,8 @@
 name = "embedded-batteries"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.83"
+authors = ["Matteo Tullo <matteotullo@microsoft.com>"]
 categories = ["asynchronous", "embedded", "hardware-support", "no-std"]
 description = "A blocking Hardware Abstraction Layer (HAL) for battery fuel gauges and battery chargers used in embedded systems."
 keywords = ["hal", "IO", "battery", "charging", "charger", "fuel gauge", "gas gauge", "SBS"]
