@@ -6,7 +6,7 @@ rust-version = "1.83"
 authors = ["Matteo Tullo <matteotullo@microsoft.com>"]
 categories = ["asynchronous", "embedded", "hardware-support", "no-std"]
 description = "An asynchronous Hardware Abstraction Layer (HAL) for battery fuel gauges and battery chargers used in embedded systems."
-keywords = ["hal", "IO", "battery", "charging", "charger", "fuel gauge", "gas gauge", "SBS"]
+keywords = ["hal", "IO", "battery", "charger", "fuel-gauge"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/OpenDevicePartnership/embedded-batteries"
@@ -15,7 +15,7 @@ repository = "https://github.com/OpenDevicePartnership/embedded-batteries"
 defmt = ["dep:defmt", "embedded-batteries/defmt"]
 
 [dependencies]
-embedded-batteries = { path = "../embedded-batteries" }
+embedded-batteries = { version = "0.1.0", path = "../embedded-batteries" }
 embedded-hal = "1.0.0"
 defmt = { version = "0.3", optional = true }
 bitfield-struct = "0.10"
