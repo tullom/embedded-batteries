@@ -356,193 +356,193 @@ macro_rules! impl_smart_battery_for_wrapper_type {
             async fn remaining_capacity_alarm(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::CapacityModeValue, Self::Error> {
-                Ok(self.$inner.remaining_capacity_alarm().await?)
+                self.$inner.remaining_capacity_alarm().await?
             }
 
             async fn set_remaining_capacity_alarm(
                 &mut self,
                 capacity: embedded_batteries_async::smart_battery::CapacityModeValue,
             ) -> Result<(), Self::Error> {
-                Ok(self.$inner.set_remaining_capacity_alarm(capacity).await?)
+                self.$inner.set_remaining_capacity_alarm(capacity).await
             }
 
             async fn remaining_time_alarm(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Minutes, Self::Error> {
-                Ok(self.$inner.remaining_time_alarm().await?)
+                self.$inner.remaining_time_alarm().await
             }
 
             async fn set_remaining_time_alarm(
                 &mut self,
                 time: embedded_batteries_async::smart_battery::Minutes,
             ) -> Result<(), Self::Error> {
-                Ok(self.$inner.set_remaining_time_alarm(time).await?)
+                self.$inner.set_remaining_time_alarm(time).await
             }
 
             async fn battery_mode(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::BatteryModeFields, Self::Error> {
-                Ok(self.$inner.battery_mode().await?)
+                self.$inner.battery_mode().await
             }
 
             async fn set_battery_mode(
                 &mut self,
                 flags: embedded_batteries_async::smart_battery::BatteryModeFields,
             ) -> Result<(), Self::Error> {
-                Ok(self.$inner.set_battery_mode(flags).await?)
+                self.$inner.set_battery_mode(flags).await
             }
 
             async fn at_rate(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::CapacityModeSignedValue, Self::Error> {
-                Ok(self.$inner.at_rate().await?)
+                self.$inner.at_rate().await
             }
 
             async fn set_at_rate(
                 &mut self,
                 rate: embedded_batteries_async::smart_battery::CapacityModeSignedValue,
             ) -> Result<(), Self::Error> {
-                Ok(self.$inner.set_at_rate(rate).await?)
+                self.$inner.set_at_rate(rate).await
             }
 
             async fn at_rate_time_to_full(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Minutes, Self::Error> {
-                Ok(self.$inner.at_rate_time_to_full().await?)
+                self.$inner.at_rate_time_to_full().await
             }
 
             async fn at_rate_time_to_empty(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Minutes, Self::Error> {
-                Ok(self.$inner.at_rate_time_to_empty().await?)
+                self.$inner.at_rate_time_to_empty().await
             }
 
             async fn at_rate_ok(&mut self) -> Result<bool, Self::Error> {
-                Ok(self.$inner.at_rate_ok().await?)
+                self.$inner.at_rate_ok().await
             }
 
             async fn temperature(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::DeciKelvin, Self::Error> {
-                Ok(self.$inner.temperature().await?)
+                self.$inner.temperature().await
             }
 
             async fn voltage(&mut self) -> Result<embedded_batteries_async::charger::MilliVolts, Self::Error> {
-                Ok(self.$inner.voltage().await?)
+                self.$inner.voltage().await
             }
 
             async fn current(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::MilliAmpsSigned, Self::Error> {
-                Ok(self.$inner.current().await?)
+                self.$inner.current().await
             }
 
             async fn average_current(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::MilliAmpsSigned, Self::Error> {
-                Ok(self.$inner.average_current().await?)
+                self.$inner.average_current().await
             }
 
             async fn max_error(&mut self) -> Result<embedded_batteries_async::smart_battery::Percent, Self::Error> {
-                Ok(self.$inner.max_error().await?)
+                self.$inner.max_error().await
             }
 
             async fn relative_state_of_charge(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Percent, Self::Error> {
-                Ok(self.$inner.relative_state_of_charge().await?)
+                self.$inner.relative_state_of_charge().await
             }
 
             async fn absolute_state_of_charge(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Percent, Self::Error> {
-                Ok(self.$inner.absolute_state_of_charge().await?)
+                self.$inner.absolute_state_of_charge().await
             }
 
             async fn remaining_capacity(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::CapacityModeValue, Self::Error> {
-                Ok(self.$inner.remaining_capacity().await?)
+                self.$inner.remaining_capacity().await
             }
 
             async fn full_charge_capacity(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::CapacityModeValue, Self::Error> {
-                Ok(self.$inner.full_charge_capacity().await?)
+                self.$inner.full_charge_capacity().await
             }
 
             async fn run_time_to_empty(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Minutes, Self::Error> {
-                Ok(self.$inner.run_time_to_empty().await?)
+                self.$inner.run_time_to_empty().await
             }
 
             async fn average_time_to_empty(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Minutes, Self::Error> {
-                Ok(self.$inner.average_time_to_empty().await?)
+                self.$inner.average_time_to_empty().await
             }
 
             async fn average_time_to_full(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::Minutes, Self::Error> {
-                Ok(self.$inner.average_time_to_full().await?)
+                self.$inner.average_time_to_full().await
             }
 
             async fn charging_current(&mut self) -> Result<embedded_batteries_async::charger::MilliAmps, Self::Error> {
-                Ok(self.$inner.charging_current().await?)
+                self.$inner.charging_current().await
             }
 
             async fn charging_voltage(&mut self) -> Result<embedded_batteries_async::charger::MilliVolts, Self::Error> {
-                Ok(self.$inner.charging_voltage().await?)
+                self.$inner.charging_voltage().await
             }
 
             async fn battery_status(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::BatteryStatusFields, Self::Error> {
-                Ok(self.$inner.battery_status().await?)
+                self.$inner.battery_status().await
             }
 
             async fn cycle_count(&mut self) -> Result<embedded_batteries_async::smart_battery::Cycles, Self::Error> {
-                Ok(self.$inner.cycle_count().await?)
+                self.$inner.cycle_count().await
             }
 
             async fn design_capacity(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::CapacityModeValue, Self::Error> {
-                Ok(self.$inner.design_capacity().await?)
+                self.$inner.design_capacity().await
             }
 
             async fn design_voltage(&mut self) -> Result<embedded_batteries_async::charger::MilliVolts, Self::Error> {
-                Ok(self.$inner.design_voltage().await?)
+                self.$inner.design_voltage().await
             }
 
             async fn specification_info(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::SpecificationInfoFields, Self::Error> {
-                Ok(self.$inner.specification_info().await?)
+                self.$inner.specification_info().await
             }
 
             async fn manufacture_date(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::ManufactureDate, Self::Error> {
-                Ok(self.$inner.manufacture_date().await?)
+                self.$inner.manufacture_date().await
             }
 
             async fn serial_number(&mut self) -> Result<u16, Self::Error> {
-                Ok(self.$inner.serial_number().await?)
+                self.$inner.serial_number().await
             }
 
             async fn manufacturer_name(&mut self, name: &mut [u8]) -> Result<(), Self::Error> {
-                Ok(self.$inner.manufacturer_name(name).await?)
+                self.$inner.manufacturer_name(name).await
             }
 
             async fn device_name(&mut self, name: &mut [u8]) -> Result<(), Self::Error> {
-                Ok(self.$inner.device_name(name).await?)
+                self.$inner.device_name(name).await
             }
 
             async fn device_chemistry(&mut self, chemistry: &mut [u8]) -> Result<(), Self::Error> {
-                Ok(self.$inner.device_chemistry(chemistry).await?)
+                self.$inner.device_chemistry(chemistry).await
             }
         }
     };
