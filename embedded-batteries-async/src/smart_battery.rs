@@ -356,7 +356,7 @@ macro_rules! impl_smart_battery_for_wrapper_type {
             async fn remaining_capacity_alarm(
                 &mut self,
             ) -> Result<embedded_batteries_async::smart_battery::CapacityModeValue, Self::Error> {
-                self.$inner.remaining_capacity_alarm().await?
+                self.$inner.remaining_capacity_alarm().await
             }
 
             async fn set_remaining_capacity_alarm(
