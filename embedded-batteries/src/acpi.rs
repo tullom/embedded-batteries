@@ -189,6 +189,17 @@ impl From<PowerUnit> for u32 {
     }
 }
 
+impl TryFrom<u32> for PowerUnit {
+    type Error = ();
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::MilliWatts),
+            1 => Ok(Self::MilliAmps),
+            _ => Err(()),
+        }
+    }
+}
+
 /// Battery Technology.
 #[repr(u32)]
 #[derive(Default, Copy, Clone, PartialEq, Eq, IntoBytes, Immutable)]
@@ -206,6 +217,17 @@ impl From<BatteryTechnology> for u32 {
         match value {
             BatteryTechnology::Primary => 0,
             BatteryTechnology::Secondary => 1,
+        }
+    }
+}
+
+impl TryFrom<u32> for BatteryTechnology {
+    type Error = ();
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Primary),
+            1 => Ok(Self::Secondary),
+            _ => Err(()),
         }
     }
 }
@@ -230,6 +252,18 @@ impl From<BatterySwapCapability> for u32 {
             BatterySwapCapability::NonSwappable => 0,
             BatterySwapCapability::ColdSwappable => 1,
             BatterySwapCapability::HotSwappable => 2,
+        }
+    }
+}
+
+impl TryFrom<u32> for BatterySwapCapability {
+    type Error = ();
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::NonSwappable),
+            1 => Ok(Self::ColdSwappable),
+            2 => Ok(Self::HotSwappable),
+            _ => Err(()),
         }
     }
 }
@@ -268,6 +302,17 @@ impl From<PowerSource> for u32 {
         match value {
             PowerSource::Offline => 0,
             PowerSource::Online => 1,
+        }
+    }
+}
+
+impl TryFrom<u32> for PowerSource {
+    type Error = ();
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::Offline),
+            1 => Ok(Self::Online),
+            _ => Err(()),
         }
     }
 }
@@ -449,6 +494,18 @@ pub enum ThresholdId {
 
     /// Set Sustainable Peak Power Threshold.
     SustainablePeakPower = 2,
+}
+
+impl TryFrom<u32> for ThresholdId {
+    type Error = ();
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Self::ClearAll),
+            1 => Ok(Self::InstantaneousPeakPower),
+            2 => Ok(Self::SustainablePeakPower),
+            _ => Err(()),
+        }
+    }
 }
 
 /// Return codes for BPT operations.
