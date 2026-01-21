@@ -820,167 +820,168 @@ macro_rules! impl_smart_battery_for_wrapper_type {
             type Error = $error;
         }
 
+        #[allow(clippy::needless_question_mark)]
         impl embedded_batteries::smart_battery::SmartBattery for $wrapper {
             fn remaining_capacity_alarm(
                 &mut self,
             ) -> Result<embedded_batteries::smart_battery::CapacityModeValue, Self::Error> {
-                self.$inner.remaining_capacity_alarm()
+                Ok(self.$inner.remaining_capacity_alarm()?)
             }
 
             fn set_remaining_capacity_alarm(
                 &mut self,
                 capacity: embedded_batteries::smart_battery::CapacityModeValue,
             ) -> Result<(), Self::Error> {
-                self.$inner.set_remaining_capacity_alarm(capacity)
+                Ok(self.$inner.set_remaining_capacity_alarm(capacity)?)
             }
 
             fn remaining_time_alarm(&mut self) -> Result<embedded_batteries::smart_battery::Minutes, Self::Error> {
-                self.$inner.remaining_time_alarm()
+                Ok(self.$inner.remaining_time_alarm()?)
             }
 
             fn set_remaining_time_alarm(
                 &mut self,
                 time: embedded_batteries::smart_battery::Minutes,
             ) -> Result<(), Self::Error> {
-                self.$inner.set_remaining_time_alarm(time)
+                Ok(self.$inner.set_remaining_time_alarm(time)?)
             }
 
             fn battery_mode(&mut self) -> Result<embedded_batteries::smart_battery::BatteryModeFields, Self::Error> {
-                self.$inner.battery_mode()
+                Ok(self.$inner.battery_mode()?)
             }
 
             fn set_battery_mode(
                 &mut self,
                 flags: embedded_batteries::smart_battery::BatteryModeFields,
             ) -> Result<(), Self::Error> {
-                self.$inner.set_battery_mode(flags)
+                Ok(self.$inner.set_battery_mode(flags)?)
             }
 
             fn at_rate(&mut self) -> Result<embedded_batteries::smart_battery::CapacityModeSignedValue, Self::Error> {
-                self.$inner.at_rate()
+                Ok(self.$inner.at_rate()?)
             }
 
             fn set_at_rate(
                 &mut self,
                 rate: embedded_batteries::smart_battery::CapacityModeSignedValue,
             ) -> Result<(), Self::Error> {
-                self.$inner.set_at_rate(rate)
+                Ok(self.$inner.set_at_rate(rate)?)
             }
 
             fn at_rate_time_to_full(&mut self) -> Result<embedded_batteries::smart_battery::Minutes, Self::Error> {
-                self.$inner.at_rate_time_to_full()
+                Ok(self.$inner.at_rate_time_to_full()?)
             }
 
             fn at_rate_time_to_empty(&mut self) -> Result<embedded_batteries::smart_battery::Minutes, Self::Error> {
-                self.$inner.at_rate_time_to_empty()
+                Ok(self.$inner.at_rate_time_to_empty()?)
             }
 
             fn at_rate_ok(&mut self) -> Result<bool, Self::Error> {
-                self.$inner.at_rate_ok()
+                Ok(self.$inner.at_rate_ok()?)
             }
 
             fn temperature(&mut self) -> Result<embedded_batteries::smart_battery::DeciKelvin, Self::Error> {
-                self.$inner.temperature()
+                Ok(self.$inner.temperature()?)
             }
 
             fn voltage(&mut self) -> Result<embedded_batteries::charger::MilliVolts, Self::Error> {
-                self.$inner.voltage()
+                Ok(self.$inner.voltage()?)
             }
 
             fn current(&mut self) -> Result<embedded_batteries::smart_battery::MilliAmpsSigned, Self::Error> {
-                self.$inner.current()
+                Ok(self.$inner.current()?)
             }
 
             fn average_current(&mut self) -> Result<embedded_batteries::smart_battery::MilliAmpsSigned, Self::Error> {
-                self.$inner.average_current()
+                Ok(self.$inner.average_current()?)
             }
 
             fn max_error(&mut self) -> Result<embedded_batteries::smart_battery::Percent, Self::Error> {
-                self.$inner.max_error()
+                Ok(self.$inner.max_error()?)
             }
 
             fn relative_state_of_charge(&mut self) -> Result<embedded_batteries::smart_battery::Percent, Self::Error> {
-                self.$inner.relative_state_of_charge()
+                Ok(self.$inner.relative_state_of_charge()?)
             }
 
             fn absolute_state_of_charge(&mut self) -> Result<embedded_batteries::smart_battery::Percent, Self::Error> {
-                self.$inner.absolute_state_of_charge()
+                Ok(self.$inner.absolute_state_of_charge()?)
             }
 
             fn remaining_capacity(
                 &mut self,
             ) -> Result<embedded_batteries::smart_battery::CapacityModeValue, Self::Error> {
-                self.$inner.remaining_capacity()
+                Ok(self.$inner.remaining_capacity()?)
             }
 
             fn full_charge_capacity(
                 &mut self,
             ) -> Result<embedded_batteries::smart_battery::CapacityModeValue, Self::Error> {
-                self.$inner.full_charge_capacity()
+                Ok(self.$inner.full_charge_capacity()?)
             }
 
             fn run_time_to_empty(&mut self) -> Result<embedded_batteries::smart_battery::Minutes, Self::Error> {
-                self.$inner.run_time_to_empty()
+                Ok(self.$inner.run_time_to_empty()?)
             }
 
             fn average_time_to_empty(&mut self) -> Result<embedded_batteries::smart_battery::Minutes, Self::Error> {
-                self.$inner.average_time_to_empty()
+                Ok(self.$inner.average_time_to_empty()?)
             }
 
             fn average_time_to_full(&mut self) -> Result<embedded_batteries::smart_battery::Minutes, Self::Error> {
-                self.$inner.average_time_to_full()
+                Ok(self.$inner.average_time_to_full()?)
             }
 
             fn charging_current(&mut self) -> Result<embedded_batteries::charger::MilliAmps, Self::Error> {
-                self.$inner.charging_current()
+                Ok(self.$inner.charging_current()?)
             }
 
             fn charging_voltage(&mut self) -> Result<embedded_batteries::charger::MilliVolts, Self::Error> {
-                self.$inner.charging_voltage()
+                Ok(self.$inner.charging_voltage()?)
             }
 
             fn battery_status(
                 &mut self,
             ) -> Result<embedded_batteries::smart_battery::BatteryStatusFields, Self::Error> {
-                self.$inner.battery_status()
+                Ok(self.$inner.battery_status()?)
             }
 
             fn cycle_count(&mut self) -> Result<embedded_batteries::smart_battery::Cycles, Self::Error> {
-                self.$inner.cycle_count()
+                Ok(self.$inner.cycle_count()?)
             }
 
             fn design_capacity(&mut self) -> Result<embedded_batteries::smart_battery::CapacityModeValue, Self::Error> {
-                self.$inner.design_capacity()
+                Ok(self.$inner.design_capacity()?)
             }
 
             fn design_voltage(&mut self) -> Result<embedded_batteries::charger::MilliVolts, Self::Error> {
-                self.$inner.design_voltage()
+                Ok(self.$inner.design_voltage()?)
             }
 
             fn specification_info(
                 &mut self,
             ) -> Result<embedded_batteries::smart_battery::SpecificationInfoFields, Self::Error> {
-                self.$inner.specification_info()
+                Ok(self.$inner.specification_info()?)
             }
 
             fn manufacture_date(&mut self) -> Result<embedded_batteries::smart_battery::ManufactureDate, Self::Error> {
-                self.$inner.manufacture_date()
+                Ok(self.$inner.manufacture_date()?)
             }
 
             fn serial_number(&mut self) -> Result<u16, Self::Error> {
-                self.$inner.serial_number()
+                Ok(self.$inner.serial_number()?)
             }
 
             fn manufacturer_name(&mut self, name: &mut [u8]) -> Result<(), Self::Error> {
-                self.$inner.manufacturer_name(name)
+                Ok(self.$inner.manufacturer_name(name)?)
             }
 
             fn device_name(&mut self, name: &mut [u8]) -> Result<(), Self::Error> {
-                self.$inner.device_name(name)
+                Ok(self.$inner.device_name(name)?)
             }
 
             fn device_chemistry(&mut self, chemistry: &mut [u8]) -> Result<(), Self::Error> {
-                self.$inner.device_chemistry(chemistry)
+                Ok(self.$inner.device_chemistry(chemistry)?)
             }
         }
     };
