@@ -2,7 +2,7 @@ use bitflags::bitflags;
 use zerocopy::{FromBytes, Immutable, IntoBytes};
 
 /// BST: Battery Status.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct BstReturn {
     /// Battery state flags indicating charging/discharging/critical status.
@@ -28,7 +28,7 @@ pub struct BstReturn {
 pub const BST_RETURN_SIZE_BYTES: usize = 16;
 
 /// Battery State (BST).
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct BatteryState(u32);
 bitflags! {
@@ -52,7 +52,7 @@ bitflags! {
 /// Represents static battery information that remains constant until the battery is replaced.
 /// Supersedes `_BIF` and includes additional fields introduced in ACPI 4.0.
 #[repr(C)]
-#[derive(Default, PartialEq, Eq, Immutable)]
+#[derive(Debug, Default, PartialEq, Eq, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct BixReturn<'a> {
     /// Revision of the BIX structure. Current revision is 1.
@@ -99,7 +99,7 @@ pub struct BixReturn<'a> {
     pub battery_swapping_capability: BatterySwapCapability,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 /// Error type when serializing BixReturn.
 pub enum BixReturnSerializeErr {
@@ -170,7 +170,7 @@ impl<'a> BixReturn<'a> {
 
 /// Power Unit.
 #[repr(u32)]
-#[derive(Default, Copy, Clone, PartialEq, Eq, Immutable, IntoBytes)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, Immutable, IntoBytes)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum PowerUnit {
     /// Capacity in mWh, rate in mW.
@@ -202,7 +202,7 @@ impl TryFrom<u32> for PowerUnit {
 
 /// Battery Technology.
 #[repr(u32)]
-#[derive(Default, Copy, Clone, PartialEq, Eq, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum BatteryTechnology {
     /// Primary (non-rechargeable).
@@ -233,7 +233,7 @@ impl TryFrom<u32> for BatteryTechnology {
 }
 
 /// Battery Swapping Capability.
-#[derive(Default, Copy, Clone, PartialEq, Eq, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, IntoBytes, Immutable)]
 #[repr(u32)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum BatterySwapCapability {
@@ -272,7 +272,7 @@ impl TryFrom<u32> for BatterySwapCapability {
 ///
 /// Represents whether a power source (e.g., AC adapter) is currently online or offline.
 /// This is used to determine if the system is running on this power source.
-#[derive(Default, Copy, Clone, PartialEq, Eq, Immutable, IntoBytes)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, Immutable, IntoBytes)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct PsrReturn {
     /// The current power source status.
@@ -286,7 +286,7 @@ pub const PSR_RETURN_SIZE_BYTES: usize = 4;
 ///
 /// Indicates whether the power source is currently supplying power to the system
 #[repr(u32)]
-#[derive(Default, Copy, Clone, PartialEq, Eq, Immutable, IntoBytes)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, Immutable, IntoBytes)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum PowerSource {
     /// Power source is offline (not supplying power).
@@ -322,7 +322,7 @@ impl TryFrom<u32> for PowerSource {
 /// Represents static information about a power source device. This information
 /// remains constant until the power source is changed.
 #[repr(C)]
-#[derive(Default, PartialEq, Eq, FromBytes, Immutable)]
+#[derive(Debug, Default, PartialEq, Eq, FromBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Pif<'a> {
     /// Bitfield describing the state and characteristics of the power source.
@@ -343,7 +343,7 @@ pub struct Pif<'a> {
     pub oem_info: &'a [u8],
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 /// Error type when serializing Pif.
 pub enum PifSerializeErr {
@@ -393,7 +393,7 @@ impl<'a> Pif<'a> {
 }
 
 /// Power Source State.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct PowerSourceState(u32);
 bitflags! {
@@ -407,7 +407,7 @@ bitflags! {
 }
 
 /// BPS: Battery Power Source Information.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bps {
     /// Current revision of the BPS structure.
@@ -448,7 +448,7 @@ pub struct Bps {
 pub const BPS_RETURN_SIZE_BYTES: usize = 20;
 
 /// BTP: Battery Trip Point.
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Btp {
     /// 0 - Clear the trip point.
@@ -461,7 +461,7 @@ pub struct Btp {
 /// Represents a request to set or clear battery power delivery capability thresholds.
 /// Used by the OS Power Management (OSPM) to configure notifications for changes
 /// in battery power delivery capabilities.
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bpt {
     /// Revision of the BPT structure.
@@ -482,7 +482,7 @@ pub struct Bpt {
 
 /// Enum representing the threshold type for battery power delivery capability.
 #[repr(u32)]
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum ThresholdId {
     #[default]
@@ -510,7 +510,7 @@ impl TryFrom<u32> for ThresholdId {
 
 /// Return codes for BPT operations.
 #[repr(u32)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum BptReturnStatus {
     /// Operation completed successfully.
@@ -536,7 +536,7 @@ pub enum BptReturnStatus {
 ///
 /// Represents static values returned by the platform firmware that describe
 /// the battery's power delivery capabilities and threshold support.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bpc {
     /// Revision of the BPC structure.
@@ -568,7 +568,7 @@ pub const BPC_RETURN_SIZE_BYTES: usize = 16;
 /// Bitflags representing the power threshold support capabilities of the platform firmware.
 ///
 /// These values are encoded in the lower two bits of the `Power Threshold Support` field.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct PowerThresholdSupport(u32);
 bitflags! {
@@ -581,7 +581,7 @@ bitflags! {
 }
 
 /// BMC: Batery Maintenance Control
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bmc {
     /// Feature control flags used to configure battery maintenance behavior.
@@ -591,7 +591,7 @@ pub struct Bmc {
 /// Bitflags representing the power threshold support capabilities of the platform firmware.
 ///
 /// These values are encoded in the lower two bits of the `Power Threshold Support` field.
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct BmcControlFlags(u32);
 bitflags! {
@@ -614,7 +614,7 @@ bitflags! {
 ///
 /// Contains information about the battery’s capabilities and current state
 /// related to calibration and charger control features.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bmd {
     /// Current status flags indicating battery maintenance state.
@@ -650,7 +650,7 @@ pub const BMD_RETURN_SIZE_BYTES: usize = 20;
 /// Status Flags returned by _BMD.
 ///
 /// These indicate the current state of battery maintenance operations.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct BmdStatusFlags(u32);
 bitflags! {
@@ -681,7 +681,7 @@ bitflags! {
 /// Capability Flags returned by _BMD.
 ///
 /// These indicate which battery maintenance features are supported.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct BmdCapabilityFlags(u32);
 bitflags! {
@@ -710,7 +710,7 @@ bitflags! {
 ///
 /// Represents a request to estimate the time required to charge the battery
 /// to a specified percentage of its Last Full Charge Capacity.
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bct {
     /// Target charge level as a percentage of Last Full Charge Capacity (1–100).
@@ -723,7 +723,7 @@ pub struct Bct {
 ///
 /// This enum represents the possible return values from the `_BCT` method.
 #[repr(u32)]
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum BctReturnResult {
     /// The requested charge level is invalid (less than current or greater than 100%).
@@ -770,7 +770,7 @@ impl From<BctReturnResult> for [u8; BCT_RETURN_SIZE_BYTES] {
 ///
 /// Represents a request to estimate the remaining runtime of the battery
 /// while it is discharging at a specified rate.
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Btm {
     /// Discharge rate in mA or mW.
@@ -784,7 +784,7 @@ pub struct Btm {
 ///
 /// This enum represents the possible return values from the `_BTM` method.
 #[repr(u32)]
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum BtmReturnResult {
     /// The discharge rate is too high, or the battery is critical (if input was 0).
@@ -831,7 +831,7 @@ impl From<BtmReturnResult> for [u8; BTM_RETURN_SIZE_BYTES] {
 ///
 /// Used to set the sampling interval (in milliseconds) for battery capacity measurements
 /// such as present rate and remaining capacity reported by `_BST`.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bms {
     /// Desired sampling time in milliseconds.
@@ -844,7 +844,7 @@ pub struct Bms {
 ///
 /// Represents the possible return values from the `_BMS` method.
 #[repr(u32)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum BmsReturnResult {
     /// Sampling time was successfully set.
@@ -867,7 +867,7 @@ impl From<BmsReturnResult> for u32 {
 ///
 /// Used to set the averaging interval (in milliseconds) for battery capacity measurements
 /// such as remaining capacity and present rate reported by `_BST`.
-#[derive(Default, Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct Bma {
     /// Desired averaging interval in milliseconds.
@@ -880,7 +880,7 @@ pub struct Bma {
 ///
 /// Represents the possible return values from the `_BMA` method.
 #[repr(u32)]
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum BmaReturnResult {
     /// Averaging interval was successfully set.
@@ -902,7 +902,7 @@ impl From<BmaReturnResult> for u32 {
 /// Result of a _STA operation.
 ///
 /// This object returns the current status of a device, which can be one of the following: enabled, disabled, or removed.
-#[derive(Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Default, Copy, Clone, PartialEq, Eq, FromBytes, IntoBytes, Immutable)]
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct StaReturn(u32);
 bitflags! {
